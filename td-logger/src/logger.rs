@@ -39,6 +39,7 @@ impl Logger {
     }
 
     pub fn write_string(&mut self, s: &str) {
+        // panic!("Senpai notice me!!!");
         dbg_write_string(s);
     }
 
@@ -61,6 +62,7 @@ impl Logger {
 
 impl fmt::Write for Logger {
     fn write_str(&mut self, s: &str) -> fmt::Result {
+        // panic!("Trying to wwrite_str");
         self.write_string(s);
         Ok(())
     }

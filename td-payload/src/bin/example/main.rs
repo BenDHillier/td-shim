@@ -58,7 +58,7 @@ pub extern "C" fn main() -> ! {
         //Dump TD Report
         let tdx_report =
             tdx_tdcall::tdreport::tdcall_report(&[0u8; TD_REPORT_ADDITIONAL_DATA_SIZE]);
-        println!("{:?}", tdx_report);
+        println!("TD REPORT: {:?}", tdx_report);
     }
 
     #[cfg(all(feature = "coverage", feature = "tdx"))]

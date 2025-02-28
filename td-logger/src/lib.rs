@@ -19,10 +19,12 @@ pub struct LoggerBackend;
 
 impl log::Log for LoggerBackend {
     fn enabled(&self, metadata: &Metadata) -> bool {
+        // panic!("Trying to enable logging");
         metadata.level() <= Level::Info
     }
 
     fn log(&self, record: &Record) {
+        // panic!("Trying to log l27");
         if self.enabled(record.metadata()) {
             tdlog!("{} - {}", record.level(), record.args());
         }
@@ -35,6 +37,7 @@ impl log::Log for LoggerBackend {
 static LOGGER_BACKEND: LoggerBackend = LoggerBackend;
 
 pub fn init() -> Result<(), SetLoggerError> {
+    // panic!("Trying to init logger");
     log::set_logger(&LOGGER_BACKEND).map(|()| log::set_max_level(LevelFilter::Info))
 }
 
@@ -58,11 +61,14 @@ const SERIAL_IO_PORT: u16 = 0x3F8;
 
 #[cfg(feature = "tdx")]
 fn dbg_port_write(byte: u8) {
+
+    // tdx_tdcall::tdx::tdvmcall_io_write_8(SERIAL_IO_PORT, b't');
     tdx_tdcall::tdx::tdvmcall_io_write_8(SERIAL_IO_PORT, byte);
 }
 
 #[cfg(all(not(feature = "tdx"), feature = "serial-port"))]
 fn dbg_port_write(byte: u8) {
+    // unsafe { x86::io::outb(SERIAL_IO_PORT, b's') };
     unsafe { x86::io::outb(SERIAL_IO_PORT, byte) };
 }
 

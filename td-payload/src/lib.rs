@@ -32,8 +32,9 @@ pub extern "C" fn _start(hob: u64, _payload: u64) -> ! {
     }
 
     let layout = RuntimeLayout::default();
-
+    println!("Calling td-payload pre_init");
     arch::init::pre_init(hob, &layout);
+    println!("Calling td-payload init");
     arch::init::init(&layout, main);
 }
 

@@ -19,7 +19,6 @@ static HEAP: LockedHeap = LockedHeap::empty();
 #[allow(clippy::empty_loop)]
 fn panic(_info: &PanicInfo) -> ! {
     use crate::println;
-
     println!("panic ... {:?}", _info);
     x86_64::instructions::hlt();
     loop {}

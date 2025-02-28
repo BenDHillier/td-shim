@@ -15,6 +15,7 @@ use core::result::Result;
 use core::sync::atomic::{fence, Ordering};
 use lazy_static::lazy_static;
 use x86_64::registers::rflags::{self, RFlags};
+// use td_payload::println;
 
 use crate::*;
 
@@ -433,6 +434,7 @@ pub fn tdvmcall_get_quote(buffer: &mut [u8]) -> Result<(), TdVmcallError> {
     let ret = td_vmcall(&mut args);
 
     if ret != TDVMCALL_STATUS_SUCCESS {
+        panic!("tdvmcall_get_quote returned err {:?}", ret);
         return Err(ret.into());
     }
 
@@ -606,7 +608,7 @@ pub fn tdcall_servtd_rd(
     if target_td_uuid.len() != TARGET_TD_UUID_NUM {
         return Err(TdCallError::TdxExitInvalidParameters);
     }
-
+    log::info!("Calling servtd_rd with binding handle: {:x}", binding_handle);
     let mut args = TdcallArgs {
         rax: TDCALL_SERVTD_RD,
         rcx: binding_handle,
@@ -621,6 +623,7 @@ pub fn tdcall_servtd_rd(
     let ret = td_call(&mut args);
 
     if ret != TDCALL_STATUS_SUCCESS {
+        log::info!("Got servtd error: {}, {}", ret, args.rax);
         return Err(ret.into());
     }
 

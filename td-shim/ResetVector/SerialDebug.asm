@@ -102,8 +102,10 @@ BITS    16
 
 %macro  debugInitialize 0
   jmp  real16InitDebug
-real16InitDebugReturn:
 %endmacro
+
+debugInitialize  ; Call the macro here to expand it
+real16InitDebugReturn: 
 
 real16InitDebug:
     ;

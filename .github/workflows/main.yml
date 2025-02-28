@@ -75,7 +75,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: xbuild
-          args: -p td-shim --target x86_64-unknown-none --features=main,tdx --no-default-features
+          args: -p td-shim --target x86_64-unknown-none --features=main,tdx --no-default-features --profile dev-opt
 
       - name: Build td-shim-tools
         run: |

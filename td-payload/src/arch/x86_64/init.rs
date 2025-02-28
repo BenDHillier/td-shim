@@ -4,12 +4,13 @@
 
 use crate::{
     acpi::init_acpi_tables,
-    arch::{gdt, idt},
+    arch::{gdt, idt, serial},
     hob::{self, get_hob},
     mm::{
         get_usable, heap::init_heap, init_ram, layout::RuntimeLayout,
         page_table::init_pt_frame_allocator, shared::init_shared_memory,
     },
+    println,
 };
 
 #[cfg(any(feature = "cet-ibt", feature = "cet-shstk"))]
@@ -23,6 +24,7 @@ use super::{
 };
 
 pub fn pre_init(hob: u64, layout: &RuntimeLayout) {
+    serial::init();
     let hob = hob::init(hob).expect("Invalid payload HOB");
     let memory_map = init_ram(hob).expect("Failed to parse E820 table from payload HOB");
 
@@ -48,6 +50,7 @@ pub fn pre_init(hob: u64, layout: &RuntimeLayout) {
 }
 
 pub fn init(layout: &RuntimeLayout, next: unsafe extern "C" fn()) -> ! {
+    println!("Inside td-payload init");
     init_acpi_tables(get_hob().expect("HOB is not intialized"))
         .expect("Fail to initialize ACPI tables");
 
@@ -80,6 +83,7 @@ pub fn init(layout: &RuntimeLayout, next: unsafe extern "C" fn()) -> ! {
 }
 
 fn jump_to_next(stack_top: u64, next: u64) -> ! {
+    println!("Jump to next {} stack_top {}", next, stack_top);
     unsafe {
         core::arch::asm!("mov rsp, {}; call {}", in(reg) stack_top, in(reg) next);
     }
