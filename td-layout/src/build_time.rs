@@ -1,4 +1,4 @@
-// Copyright (c) 2021 - 2024  Intel Corporation
+// Copyright (c) 2021 - 2025  Intel Corporation
 //
 // SPDX-License-Identifier: BSD-2-Clause-Patent
 
@@ -7,21 +7,21 @@
 /*
 Image Layout
 +----------------------------------------+ <- 0x0
-|                 CONFIG                 |   (0x40000) 256 kB
-+----------------------------------------+ <- 0x40000
+|                 CONFIG                 |   (0x20000) 128 kB
++----------------------------------------+ <- 0x20000
 |                MAILBOX                 |   (0x1000) 4 kB
++----------------------------------------+ <- 0x21000
+|               TEMP_STACK               |   (0x10000) 64 kB
++----------------------------------------+ <- 0x31000
+|               TEMP_HEAP                |   (0x10000) 64 kB
 +----------------------------------------+ <- 0x41000
-|               TEMP_STACK               |   (0x20000) 128 kB
-+----------------------------------------+ <- 0x61000
-|               TEMP_HEAP                |   (0x20000) 128 kB
-+----------------------------------------+ <- 0x81000
 |                  FREE                  |   (0x0) 0 B
-+----------------------------------------+ <- 0x81000
-|                PAYLOAD                 |   (0xC2D000) 12.18 MB
-+----------------------------------------+ <- 0xCAE000
++----------------------------------------+ <- 0x41000
+|                PAYLOAD                 |   (0xF66000) 15.40 MB
++----------------------------------------+ <- 0xFA7000
 |                METADATA                |   (0x1000) 4 kB
-+----------------------------------------+ <- 0xCAF000
-|                  IPL                   |   (0x349000) 3.29 MB
++----------------------------------------+ <- 0xFA8000
+|                  IPL                   |   (0x50000) 320 kB
 +----------------------------------------+ <- 0xFF8000
 |              RESET_VECTOR              |   (0x8000) 32 kB
 +----------------------------------------+ <- 0x1000000
@@ -31,28 +31,28 @@ Image size: 0x1000000 (16 MB)
 // Image Layout Configuration
 
 pub const TD_SHIM_CONFIG_OFFSET: u32 = 0x0;
-pub const TD_SHIM_CONFIG_SIZE: u32 = 0x40000; // 256 kB
+pub const TD_SHIM_CONFIG_SIZE: u32 = 0x20000; // 128 kB
 
-pub const TD_SHIM_MAILBOX_OFFSET: u32 = 0x40000;
+pub const TD_SHIM_MAILBOX_OFFSET: u32 = 0x20000;
 pub const TD_SHIM_MAILBOX_SIZE: u32 = 0x1000; // 4 kB
 
-pub const TD_SHIM_TEMP_STACK_OFFSET: u32 = 0x41000;
-pub const TD_SHIM_TEMP_STACK_SIZE: u32 = 0x20000; // 128 kB
+pub const TD_SHIM_TEMP_STACK_OFFSET: u32 = 0x21000;
+pub const TD_SHIM_TEMP_STACK_SIZE: u32 = 0x10000; // 64 kB
 
-pub const TD_SHIM_TEMP_HEAP_OFFSET: u32 = 0x61000;
-pub const TD_SHIM_TEMP_HEAP_SIZE: u32 = 0x20000; // 128 kB
+pub const TD_SHIM_TEMP_HEAP_OFFSET: u32 = 0x31000;
+pub const TD_SHIM_TEMP_HEAP_SIZE: u32 = 0x10000; // 64 kB
 
-pub const TD_SHIM_FREE_OFFSET: u32 = 0x81000;
+pub const TD_SHIM_FREE_OFFSET: u32 = 0x41000;
 pub const TD_SHIM_FREE_SIZE: u32 = 0x0; // 0 B
 
-pub const TD_SHIM_PAYLOAD_OFFSET: u32 = 0x81000;
-pub const TD_SHIM_PAYLOAD_SIZE: u32 = 0xC2D000; // 12.18 MB
+pub const TD_SHIM_PAYLOAD_OFFSET: u32 = 0x41000;
+pub const TD_SHIM_PAYLOAD_SIZE: u32 = 0xF66000; // 15.40 MB
 
-pub const TD_SHIM_METADATA_OFFSET: u32 = 0xCAE000;
+pub const TD_SHIM_METADATA_OFFSET: u32 = 0xFA7000;
 pub const TD_SHIM_METADATA_SIZE: u32 = 0x1000; // 4 kB
 
-pub const TD_SHIM_IPL_OFFSET: u32 = 0xCAF000;
-pub const TD_SHIM_IPL_SIZE: u32 = 0x349000; // 3.29 MB
+pub const TD_SHIM_IPL_OFFSET: u32 = 0xFA8000;
+pub const TD_SHIM_IPL_SIZE: u32 = 0x50000; // 320 kB
 
 pub const TD_SHIM_RESET_VECTOR_OFFSET: u32 = 0xFF8000;
 pub const TD_SHIM_RESET_VECTOR_SIZE: u32 = 0x8000; // 32 kB
@@ -68,11 +68,11 @@ pub const TD_SHIM_SEC_CORE_INFO_BASE: u32 = 0xFFFFFFAC;
 
 // Base Address after Loaded into Memory
 pub const TD_SHIM_CONFIG_BASE: u32 = 0xFF000000;
-pub const TD_SHIM_MAILBOX_BASE: u32 = 0xFF040000;
-pub const TD_SHIM_TEMP_STACK_BASE: u32 = 0xFF041000;
-pub const TD_SHIM_TEMP_HEAP_BASE: u32 = 0xFF061000;
-pub const TD_SHIM_FREE_BASE: u32 = 0xFF081000;
-pub const TD_SHIM_PAYLOAD_BASE: u32 = 0xFF081000;
-pub const TD_SHIM_METADATA_BASE: u32 = 0xFFCAE000;
-pub const TD_SHIM_IPL_BASE: u32 = 0xFFCAF000;
+pub const TD_SHIM_MAILBOX_BASE: u32 = 0xFF020000;
+pub const TD_SHIM_TEMP_STACK_BASE: u32 = 0xFF021000;
+pub const TD_SHIM_TEMP_HEAP_BASE: u32 = 0xFF031000;
+pub const TD_SHIM_FREE_BASE: u32 = 0xFF041000;
+pub const TD_SHIM_PAYLOAD_BASE: u32 = 0xFF041000;
+pub const TD_SHIM_METADATA_BASE: u32 = 0xFFFA7000;
+pub const TD_SHIM_IPL_BASE: u32 = 0xFFFA8000;
 pub const TD_SHIM_RESET_VECTOR_BASE: u32 = 0xFFFF8000;
