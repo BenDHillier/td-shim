@@ -1,4 +1,4 @@
-// Copyright (c) 2021 - 2024  Intel Corporation
+// Copyright (c) 2021 - 2025  Intel Corporation
 //
 // SPDX-License-Identifier: BSD-2-Clause-Patent
 
@@ -14,20 +14,20 @@ Top of Low Memory: 0x80000000
 +----------------------------------------+ <- 0x7FEFE000
 |           PAYLOAD_PAGE_TABLE           |   (0x20000) 128 kB
 +----------------------------------------+ <- 0x7FEDE000
-|                PAYLOAD                 |   (0x2000000) 32 MB
-+----------------------------------------+ <- 0x7DEDE000
+|                PAYLOAD                 |   (0x1000000) 16 MB
++----------------------------------------+ <- 0x7EEDE000
 |                  ACPI                  |   (0x100000) 1 MB
-+----------------------------------------+ <- 0x7DDDE000
-|                  FREE                  |   (0x7D5BE000) 1.96 GB
++----------------------------------------+ <- 0x7EDDE000
+|                  FREE                  |   (0x7E5BE000) 1.97 GB
 +----------------------------------------+ <- 0x820000
 |                 TD_HOB                 |   (0x20000) 128 kB
 +----------------------------------------+ <- 0x800000
 |               BOOTLOADER               |   (0x800000) 8 MB
 +----------------------------------------+ <- 0x0
-Total Usage: 0x2A42000 (42.26 MB)
+Total Usage: 0x1A42000 (26.26 MB)
 */
 
-pub const TOTAL_USAGE: usize = 0x2A42000; // (42.26 MB)
+pub const TOTAL_USAGE: usize = 0x1A42000; // (26.26 MB)
 
 // Runtime Layout Configuration
 pub const BOOTLOADER_BASE: usize = 0x0;
@@ -35,7 +35,7 @@ pub const BOOTLOADER_SIZE: usize = 0x800000; // 8 MB
 pub const TD_HOB_BASE: usize = 0x800000;
 pub const TD_HOB_SIZE: usize = 0x20000; // 128 kB
 pub const ACPI_SIZE: usize = 0x100000; // 1 MB
-pub const PAYLOAD_SIZE: usize = 0x2000000; // 32 MB
+pub const PAYLOAD_SIZE: usize = 0x1000000; // 16 MB
 pub const PAYLOAD_PAGE_TABLE_SIZE: usize = 0x20000; // 128 kB
 pub const RELOCATED_MAILBOX_SIZE: usize = 0x2000; // 8 kB
 pub const EVENT_LOG_SIZE: usize = 0x100000; // 1 MB
@@ -45,7 +45,7 @@ pub const MEMORY_LAYOUT_CONFIG: &[(&str, usize, &str)] = &[
     ("Bootloader", 0x800000, "Memory"),
     ("TdHob", 0x20000, "Memory"),
     ("Acpi", 0x100000, "Acpi"),
-    ("Payload", 0x2000000, "Reserved"),
+    ("Payload", 0x1000000, "Reserved"),
     ("PayloadPageTable", 0x20000, "Reserved"),
     ("RelocatedMailbox", 0x2000, "Nvs"),
     ("EventLog", 0x100000, "Nvs"),
